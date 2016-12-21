@@ -1,0 +1,2 @@
+model_checkpoint_path: "texture_net.chkp"
+all_model_checkpoint_paths: "texture_net.chkp"
