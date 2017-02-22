@@ -95,8 +95,8 @@ def network(input_image):
         vgg_mean_0 = tf.constant(103.939)
         vgg_mean_1 = tf.constant(116.779)
         vgg_mean_2 = tf.constant(123.68)
-        red, green, blue = tf.split(2, 3, ops['squeeze'])
-        ops['bgr'] = tf.concat(2, [blue + vgg_mean_2, green + vgg_mean_1, red + vgg_mean_0])
+        red, green, blue = tf.split(ops['squeeze'], num_or_size_splits=3, axis=2)
+        ops['bgr'] = tf.concat([blue + vgg_mean_2, green + vgg_mean_1, red + vgg_mean_0], 2)
 
     # TensorBoard output
     tf.summary.FileWriter("./tb/", tf.get_default_graph()).close()
@@ -160,7 +160,7 @@ def pad(input, number_repetition=1):
 def conv_transpose(input, strides, shape_filter, corresponding_tensor):
     filter = tf.Variable(tf.truncated_normal(shape_filter, stddev=0.1), name='filter')
     shape = tf.shape(corresponding_tensor)
-    outputshape = tf.pack([shape[0], shape[1], shape[2], shape[3]])
+    outputshape = tf.stack([shape[0], shape[1], shape[2], shape[3]])
     return tf.nn.conv2d_transpose(input, filter, outputshape, strides, padding='VALID')
 
 

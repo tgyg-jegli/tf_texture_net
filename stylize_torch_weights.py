@@ -106,7 +106,7 @@ def network(input_image):
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         shape = tf.shape(ops['conv_6'])
-        outputshape = tf.pack([shape[0], shape[1], shape[2], shape[3]])
+        outputshape = tf.stack([shape[0], shape[1], shape[2], shape[3]])
         ops['conv_17'] = tf.nn.conv2d_transpose(ops['res_block_16'], filter, outputshape, strides, padding='VALID', name=None)
 
     with tf.name_scope('norm_18'):
@@ -124,7 +124,7 @@ def network(input_image):
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         shape = tf.shape(ops['conv_3'])
-        outputshape = tf.pack([shape[0], shape[1], shape[2], shape[3]])
+        outputshape = tf.stack([shape[0], shape[1], shape[2], shape[3]])
         ops['conv_20'] = tf.nn.conv2d_transpose(ops['relu_19'], filter, outputshape, strides, padding='VALID', name=None)
 
     with tf.name_scope('norm_21'):
@@ -152,8 +152,8 @@ def network(input_image):
         vgg_mean_0 = tf.constant(103.939)
         vgg_mean_1 = tf.constant(116.779)
         vgg_mean_2 = tf.constant(123.68)
-        red, green, blue = tf.split(2, 3, ops['squeeze'])
-        ops['bgr'] = tf.concat(2, [blue + vgg_mean_2, green + vgg_mean_1, red + vgg_mean_0])
+        red, green, blue = tf.split(ops['squeeze'], num_or_size_splits=3, axis=2)
+        ops['bgr'] = tf.concat([blue + vgg_mean_2, green + vgg_mean_1, red + vgg_mean_0], 2)
 
     # TensorBoard output
     tf.summary.FileWriter("./tb/", tf.get_default_graph()).close()

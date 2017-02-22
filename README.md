@@ -18,7 +18,7 @@ On the left-hand side the input-picture is shown. The second picture is generate
 
 ## Prerequisites
 
-* [TensorFlow](https://www.tensorflow.org/) (>= r0.12)
+* [TensorFlow](https://www.tensorflow.org/) (>= r1.0)
 * [Scipy](https://www.scipy.org/)
 * [Numpy](http://www.numpy.org/)
 * [Pillow](https://python-pillow.org/)
