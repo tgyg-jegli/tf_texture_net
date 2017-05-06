@@ -12,9 +12,7 @@ The TensorFlow implementation is not completely identical. The slight difference
 
 On the left-hand side the input-picture is shown. The second picture is generated with the original Torch implementation and the third picture is generated with our TensorFlow implementation.
 
-<img src="./pics/example.jpg" width="250" alt="Original image">
-<img src="./pics/example_torch.jpg" width="250" alt="Torch image">
-<img src="./pics/example_tensorflow.jpg" width="250" alt="TensorFlow image">
+<img src="./pics/example.jpg" width="250" alt="Original image"> <img src="./pics/example_torch.jpg" width="250" alt="Torch image"> <img src="./pics/example_tensorflow.jpg" width="250" alt="TensorFlow image">
 
 ## Prerequisites
 
