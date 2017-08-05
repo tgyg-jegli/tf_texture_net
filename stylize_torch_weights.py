@@ -49,7 +49,7 @@ def network(input_image):
         ops['pad_2'] = tf.pad(ops['pad_2'], paddings, "SYMMETRIC")
 
     with tf.name_scope('conv_3'):
-        weights = np.transpose(lua_model.modules[2].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[2].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 1, 1, 1]
         ops['conv_3'] = tf.nn.conv2d(ops['pad_2'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
@@ -65,7 +65,7 @@ def network(input_image):
         ops['relu_5'] = tf.nn.relu(ops['norm_4'])
 
     with tf.name_scope('conv_6'):
-        weights = np.transpose(lua_model.modules[5].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[5].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         ops['conv_6'] = tf.nn.conv2d(ops['relu_5'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
@@ -81,7 +81,7 @@ def network(input_image):
         ops['relu_8'] = tf.nn.relu(ops['norm_7'])
 
     with tf.name_scope('conv_9'):
-        weights = np.transpose(lua_model.modules[8].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[8].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         ops['conv_9'] = tf.nn.conv2d(ops['relu_8'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
@@ -102,7 +102,7 @@ def network(input_image):
             ops['res_block_' + str(i)] = res_block(ops['res_block_' + str(i-1)], (i-1), lua_model)
 
     with tf.name_scope('conv_transpose_17'):
-        weights = np.transpose(lua_model.modules[16].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[16].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         shape = tf.shape(ops['conv_6'])
@@ -120,7 +120,7 @@ def network(input_image):
         ops['relu_19'] = tf.nn.relu(ops['norm_18'])
 
     with tf.name_scope('conv_transpose_20'):
-        weights = np.transpose(lua_model.modules[19].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[19].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 2, 2, 1]
         shape = tf.shape(ops['conv_3'])
@@ -139,10 +139,10 @@ def network(input_image):
 
     with tf.name_scope('pad_23'):
         paddings = [[0, 0], [1, 1], [1, 1], [0, 0]]
-        ops['pad_23'] = tf.pad(ops['relu_22'], paddings, "SYMMETRIC");
+        ops['pad_23'] = tf.pad(ops['relu_22'], paddings, "SYMMETRIC")
 
     with tf.name_scope('conv_24'):
-        weights = np.transpose(lua_model.modules[23].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[23].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 1, 1, 1]
         ops['conv_24'] = tf.nn.conv2d(ops['pad_23'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
@@ -182,7 +182,7 @@ def res_block(input, index, lua_model):
         res_block_ops['pad_1'] = tf.pad(input, paddings, "SYMMETRIC");
 
     with tf.name_scope('conv_2'):
-        weights = np.transpose(lua_model.modules[index].modules[0].modules[1].modules[1].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[index].modules[0].modules[1].modules[1].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         strides = [1, 1, 1, 1]
         res_block_ops['conv_2'] = tf.nn.conv2d(res_block_ops['pad_1'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
@@ -203,7 +203,7 @@ def res_block(input, index, lua_model):
         res_block_ops['pad_5'] = tf.pad(res_block_ops['relu_4'], paddings, "SYMMETRIC");
 
     with tf.name_scope('conv_6'):
-        weights = np.transpose(lua_model.modules[index].modules[0].modules[1].modules[5].weight.asNumpyArray())
+        weights = np.transpose(lua_model.modules[index].modules[0].modules[1].modules[5].weight.asNumpyArray(), (2, 3, 1, 0))
         filter = tf.Variable(weights, name='filter')
         res_block_ops['conv_6'] = tf.nn.conv2d(res_block_ops['pad_5'], filter, strides, padding='VALID', use_cudnn_on_gpu=None, data_format=None, name=None)
 
